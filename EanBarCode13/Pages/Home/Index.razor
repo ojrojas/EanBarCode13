@@ -1,0 +1,92 @@
+﻿@page "/"
+
+@using Core.DTOs
+@using Core.Interfaces
+@inject IWorkBookService _service
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@inject IToastService toastService
+@using EanBarCode13.Services
+@inject IDialogCustomService _dialogService;
+
+
+<div class="containermainindex">
+    <div class="tableindex">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        quantity
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @if (workbookResponse != default)
+                {
+                    @foreach (var i in workbookResponse.WorkBooks)
+                    {
+                        <tr>
+                            <td colspan="3">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                <span class="btn btn-outline-danger"
+                                              type="button"
+                                              @onclick="async ()=> await DeleteWorkBookAsync(i.Id, i.Name)">
+                                                    Del
+                                                </span> -
+                                                @i.Name - @i.Date.ToShortDateString()
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                @foreach (var sheet in i.Sheets)
+                                                {
+                                                    <div class="card">
+                                                        <div>@sheet.Name</div>
+                                                        <div>
+                                                            <div>@sheet.Position</div>/<div>@sheet.Quantity</div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="actionsbuttons">
+        <button class="btn btn-primary">Add WorkBook</button>
+    </div>
+</div>
+
+@code {
+    private WorkBookGetAllResponse workbookResponse;
+
+    protected override async Task OnInitializedAsync()
+    {
+        workbookResponse = await _service.GetAllWorkBookAsync(new WorkBookGetAllRequest());
+    }
+
+    private async Task DeleteWorkBookAsync(int workBookId, string name)
+    {
+
+        bool answer = await _dialogService.DisplayConfirm("Question?", "Would you like to play a game", "Yes", "No");
+        if (answer)
+            await _service.DeleteWorkBookAsync(new() { Id = workBookId });
+        workbookResponse = await _service.GetAllWorkBookAsync(new WorkBookGetAllRequest());
+    }
+
+}

@@ -1,0 +1,21 @@
+﻿.containermainindex {
+    display: flex;
+    flex: 1;
+    flex-direction: column
+}
+
+.tableindex {
+    flex: 1;
+    height: 100px;
+}
+
+.actionsbuttons {
+    flex: 3;
+    justify-self: center;
+    text-align:center;
+}
+
+.buttontrash {
+    height: 20px;
+    width: 20px;
+}
