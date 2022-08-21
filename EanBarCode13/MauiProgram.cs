@@ -43,6 +43,9 @@ namespace EanBarCode13
 
             builder.Services.AddTransient<ISheetItemService, SheetItemService>();
             builder.Services.AddTransient<IWorkBookService, WorkBookService>();
+            builder.Services.AddTransient<ISheetService, SheetService>();
+            builder.Services.AddTransient<IExcelService, ExcelService>();
+
 
             return builder.Build();
         }

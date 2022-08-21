@@ -1,6 +1,6 @@
 ﻿namespace Core.DTOs
 {
-    public class SheetCreateRequest : BaseRequest 
+    public class SheetUpdateRequest : BaseRequest
     {
         public Sheet Sheet { get; set; }
     }

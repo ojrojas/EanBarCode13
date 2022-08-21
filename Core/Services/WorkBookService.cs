@@ -45,7 +45,7 @@ public class WorkBookService : IWorkBookService
 
     private async Task<List<Sheet>> GetListSheetByWorkBookId(int workbookId)
     {
-        var sheets = await _sheetRepository.GetAllSheetByWorkBookId(workbookId);
+        var sheets = await _sheetRepository.GetAllSheetByWorkBookIdAsync(workbookId);
         if (sheets.Any())
             return sheets.ToList();
         return new List<Sheet>();

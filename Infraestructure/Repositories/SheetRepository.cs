@@ -14,10 +14,23 @@ public class SheetRepository : GenericRepository, ISheetRepository
         return await CreateAsync(entity);
     }
 
-    public async Task<IEnumerable<Sheet>> GetAllSheetByWorkBookId(int workBookId)
+    public async Task<int> UpdateSheetAsync(Sheet entity)
+    {
+        _logger.LogInformation($"Create entity type of {typeof(Sheet)} value");
+        return await UpdateAsync(entity);
+    }
+
+    public async Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(int workBookId)
     {
         _logger.LogInformation($"Get all sheets by workbook id {workBookId}");
         var result =  await GetAllAsync<Sheet>();
         return result .Where(x => x.WorkBookId == workBookId);
+    }
+
+    public async Task<Sheet> GetAllSheetByIdAsync(int sheetId)
+    {
+        _logger.LogInformation($"Get all sheets by workbook id {sheetId}");
+        var result = await GetAllAsync<Sheet>();
+        return result.Where(x => x.Id == sheetId).FirstOrDefault();
     }
 }

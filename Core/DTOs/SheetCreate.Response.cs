@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
-    public class SheetDto
+    public class SheetCreateResponse : BaseResponse
     {
+        public SheetCreateResponse(Guid Correlation) : base(Correlation) { }
+
+        public int SheetId { get; set; }
     }
 }
