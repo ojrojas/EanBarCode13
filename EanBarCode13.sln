@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructure", "Infraestructure\Infraestructure.csproj", "{A118DC01-7E1C-4E59-9835-2AC680B29D3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EanBarCode13", "EanBarCode13\EanBarCode13.csproj", "{AF01F051-5669-4601-B928-4F927EBAB63E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EanBarCode13", "EanBarCode13\EanBarCode13.csproj", "{AF01F051-5669-4601-B928-4F927EBAB63E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

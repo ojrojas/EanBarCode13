@@ -36,10 +36,18 @@
                     </h2>
                     <div id="@reference" class="accordion-collapse collapse" aria-labelledby="@referenceHeading" data-bs-parent="#accordionEanBarCode">
                         <div class="accordion-body">
-                            @foreach (var sheet in i.Sheets)
-                            {
-                                <span>@sheet.Name - @sheet.Position / @sheet.Quantity</span>
-                            }
+                            <ul class="list-group">
+                                @foreach (var sheet in i.Sheets)
+                                {
+                                    <li class="list-group-item">
+                                        <div class="nav-item px-3">
+                                            <NavLink class="nav-link" href="sheet" >
+                                                <span>@sheet.Name</span> - <span class="item-sheetitems-item"><strong>@sheet.Position</strong>/@sheet.Quantity</span>
+                                            </NavLink>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                     </div>
                 </div>
