@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.DTOs
+﻿namespace Core.DTOs
 {
-    public class SheetItemCreate
+    public class SheetItemCreateRequest : BaseRequest
     {
+        public SheetItem SheetItem { get; set; }
     }
 }

@@ -1,13 +1,12 @@
 ﻿namespace Core.Models;
 
 [Table("sheet")]
-public class Sheet
+public class Sheet : BaseEntity
 {
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
+   
     public string Name { get; set; }
     public int Position { get; set; }
     public int Quantity { get; set; }
-    public int WorkBookId { get; set; }
+    public string WorkBookId { get; set; }
 }
 

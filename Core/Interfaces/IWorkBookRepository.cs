@@ -2,8 +2,8 @@
 
 public interface IWorkBookRepository
 {
-    Task<int> CreateWorkBookAsync(WorkBook entity);
+    Task<WorkBook> CreateWorkBookAsync(WorkBook entity);
+    Task<WorkBook> DeleteWorkBookAsync(WorkBook workBook);
     Task<IEnumerable<WorkBook>> GetAllWorkBooksAsync();
-    Task<int> DeleteWorkBookAsync(WorkBook entity);
-    Task<WorkBook> GetWorkBookByIdAsync(int workBookId);
+    Task<WorkBook> GetWorkBookByIdAsync(string workBookId);
 }

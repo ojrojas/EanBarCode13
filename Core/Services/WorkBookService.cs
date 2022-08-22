@@ -14,8 +14,8 @@ public class WorkBookService : IWorkBookService
     public async Task<WorkBookCreateResponse> CreateWorkBookAsync(WorkBookCreateRequest request)
     {
         WorkBookCreateResponse response = new(request.CorrelationId);
-        response.WorkBookId = await _workBookRepository.CreateWorkBookAsync(request.WorkBook);
-        response.Message = response.WorkBookId.Equals(default) ? "Error to create WorkBook": "WorkBook Create";
+        response.WorkBookCreated = await _workBookRepository.CreateWorkBookAsync(request.WorkBook);
+        response.Message = response.WorkBookCreated.Equals(default) ? "Error to create WorkBook": "WorkBook Create";
         return response;
     }
 
@@ -39,11 +39,11 @@ public class WorkBookService : IWorkBookService
     {
         WorkBookDeleteResponse response = new(request.CorrelationId);
         var found = await _workBookRepository.GetWorkBookByIdAsync(request.Id);
-        response.WorkBookIdDeleted = await _workBookRepository.DeleteWorkBookAsync(found);
+        response.WorkBookDeleted = await _workBookRepository.DeleteWorkBookAsync(found);
         return response;
     }
 
-    private async Task<List<Sheet>> GetListSheetByWorkBookId(int workbookId)
+    private async Task<List<Sheet>> GetListSheetByWorkBookId(string workbookId)
     {
         var sheets = await _sheetRepository.GetAllSheetByWorkBookIdAsync(workbookId);
         if (sheets.Any())

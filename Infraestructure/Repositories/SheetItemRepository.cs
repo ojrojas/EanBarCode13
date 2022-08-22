@@ -8,7 +8,7 @@ public class SheetItemRepository : GenericRepository, ISheetItemRepository
         _logger = logger;
     }
 
-    public async Task<int> CreateSheetItemAsync(SheetItem sheetItem)
+    public async Task<SheetItem> CreateSheetItemAsync(SheetItem sheetItem)
     {
         return await CreateAsync(sheetItem);
     }

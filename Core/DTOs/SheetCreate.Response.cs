@@ -4,6 +4,6 @@
     {
         public SheetCreateResponse(Guid Correlation) : base(Correlation) { }
 
-        public int SheetId { get; set; }
+        public Sheet SheetCreated { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Infraestructure.Repositories;
 
+
+
 public class SheetRepository : GenericRepository, ISheetRepository
 {
     private readonly ILogger<SheetRepository> _logger;
@@ -8,26 +10,26 @@ public class SheetRepository : GenericRepository, ISheetRepository
         _logger = logger;
     }
 
-    public async Task<int> CreateSheetAsync(Sheet entity)
+    public async Task<Sheet> CreateSheetAsync(Sheet entity)
     {
         _logger.LogInformation($"Create entity type of {typeof(Sheet)} value");
         return await CreateAsync(entity);
     }
 
-    public async Task<int> UpdateSheetAsync(Sheet entity)
+    public async Task<Sheet> UpdateSheetAsync(Sheet entity)
     {
         _logger.LogInformation($"Create entity type of {typeof(Sheet)} value");
         return await UpdateAsync(entity);
     }
 
-    public async Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(int workBookId)
+    public async Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(string workBookId)
     {
         _logger.LogInformation($"Get all sheets by workbook id {workBookId}");
-        var result =  await GetAllAsync<Sheet>();
-        return result .Where(x => x.WorkBookId == workBookId);
+        var result = await GetAllAsync<Sheet>();
+        return result.Where(x => x.WorkBookId == workBookId);
     }
 
-    public async Task<Sheet> GetAllSheetByIdAsync(int sheetId)
+    public async Task<Sheet> GetAllSheetByIdAsync(string sheetId)
     {
         _logger.LogInformation($"Get all sheets by workbook id {sheetId}");
         var result = await GetAllAsync<Sheet>();

@@ -4,7 +4,7 @@
     {
         public WorkBookDeleteResponse(Guid Correlation): base(Correlation) { }
 
-        public int WorkBookIdDeleted { get; set; }
+        public WorkBook WorkBookDeleted { get; set; }
 
     }
 }

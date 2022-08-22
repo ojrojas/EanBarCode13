@@ -1,9 +1,8 @@
-﻿
-namespace Core.Interfaces;
+﻿namespace Core.Interfaces;
 public interface ISheetRepository
 {
-    Task<int> CreateSheetAsync(Sheet entity);
-    Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(int workBookId);
-    Task<int> UpdateSheetAsync(Sheet entity);
-    Task<Sheet> GetAllSheetByIdAsync(int sheetId);
+    Task<Sheet> CreateSheetAsync(Sheet entity);
+    Task<Sheet> GetAllSheetByIdAsync(string sheetId);
+    Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(string workBookId);
+    Task<Sheet> UpdateSheetAsync(Sheet entity);
 }

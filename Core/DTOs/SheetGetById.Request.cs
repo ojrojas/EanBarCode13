@@ -2,6 +2,6 @@
 {
     public class SheetGetByIdRequest : BaseRequest
     {
-        public int SheetId { get; set; }
+        public string SheetId { get; set; }
     }
 }

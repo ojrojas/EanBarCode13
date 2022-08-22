@@ -14,6 +14,15 @@
 
     <h3>WorkBook List</h3>
 
+    @if (loading)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    }
+
     @if (workbookResponse != default)
     {
         @foreach (var i in workbookResponse.WorkBooks)
@@ -41,7 +50,7 @@
                                 {
                                     <li class="list-group-item">
                                         <div class="nav-item px-3">
-                                            <NavLink class="nav-link" href="sheet" >
+                                            <NavLink class="nav-link" href="sheet">
                                                 <span>@sheet.Name</span> - <span class="item-sheetitems-item"><strong>@sheet.Position</strong>/@sheet.Quantity</span>
                                             </NavLink>
                                         </div>
@@ -65,13 +74,13 @@
 
 @code {
     private WorkBookGetAllResponse workbookResponse;
-
+    private bool loading = false;
     protected override async Task OnInitializedAsync()
     {
         await LoadDataWorkBooksAsync();
     }
 
-    private async Task DeleteWorkBookAsync(int workBookId, string name)
+    private async Task DeleteWorkBookAsync(string workBookId, string name)
     {
 
         bool answer = await _dialogService.DisplayConfirm("Question?", "Would you like to play a game", "Yes", "No");
@@ -82,11 +91,14 @@
 
     private async Task LoadDataWorkBooksAsync()
     {
+        loading = true;
         workbookResponse = await _service.GetAllWorkBookAsync(new WorkBookGetAllRequest());
+        loading = false;
     }
 
     private async Task OpenFileWorkBook()
     {
+        loading = true;
         await _excelService.CreateWorkBookAsync();
         await LoadDataWorkBooksAsync();
     }

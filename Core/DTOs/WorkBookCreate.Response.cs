@@ -4,7 +4,7 @@
     {
         public WorkBookCreateResponse(Guid Correlation) : base(Correlation) {}
 
-        public int WorkBookId { get; set; }
+        public WorkBook WorkBookCreated { get; set; }
 
     }
 }

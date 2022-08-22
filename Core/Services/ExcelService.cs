@@ -28,22 +28,30 @@ namespace Core.Services
             SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
             SharedStringTable sst = sstpart.SharedStringTable;
 
-            var workbookId = await _workbookService.CreateWorkBookAsync(new WorkBookCreateRequest() { WorkBook = new() { 
-                Name = filecharged.FileName,
-                Date = DateTime.Now
-            }});
+            var workbook = await _workbookService.CreateWorkBookAsync(new WorkBookCreateRequest()
+            {
+                WorkBook = new()
+                {
+                    Name = filecharged.FileName,
+                    Date = DateTime.Now
+                }
+            });
 
-            foreach(var worksheetPart in workbookPart.WorksheetParts)
+            var index = default(int);
+            foreach (var worksheetPart in workbookPart.WorksheetParts)
             {
                 Worksheet sheet = worksheetPart.Worksheet;
+                var nameSheet = workbookPart.Workbook.Descendants<DocumentFormat.OpenXml.Spreadsheet.Sheet>().ElementAt(index).Name;
 
                 var sheetId = _sheetService.CreateSheetAsync(
-                    new() {
-                        Sheet = new() {
-                            Name = sheet.NamespaceUri,
+                    new()
+                    {
+                        Sheet = new()
+                        {
+                            Name = nameSheet,
                             Position = 0,
                             Quantity = workbookPart.WorksheetParts.Count(),
-                            WorkBookId = workbookId.WorkBookId
+                            WorkBookId = workbook.WorkBookCreated.Id
                         }
                     });
 
@@ -62,8 +70,10 @@ namespace Core.Services
                     var value = cell1.CellValue;
                     var stringValue = double.Parse(value.InnerText).ToString("F0", CultureInfo.InvariantCulture).Substring(0, 13).PadLeft(13, '0');
                     Console.WriteLine("Shared string {0}: {1}", str, stringValue);
-                    await _sheetItemService.CreateSheetItemAsync(new() { Code = stringValue, Name = str, SheetId = sheetId.Id });
+                    await _sheetItemService.CreateSheetItemAsync(new() { SheetItem = new SheetItem() { Code = stringValue, Name = str, SheetId = sheetId.Id } });
                 }
+
+                index++;
             }
         }
 

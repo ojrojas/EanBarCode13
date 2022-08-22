@@ -1,5 +1,6 @@
 ﻿namespace Infraestructure.Repositories;
 
+
 public class WorkBookRepository : GenericRepository, IWorkBookRepository
 {
     private readonly ILogger<WorkBookRepository> _logger;
@@ -14,17 +15,17 @@ public class WorkBookRepository : GenericRepository, IWorkBookRepository
         return await GetAllAsync<WorkBook>();
     }
 
-    public async Task<int> CreateWorkBookAsync(WorkBook entity)
+    public async Task<WorkBook> CreateWorkBookAsync(WorkBook entity)
     {
         return await CreateAsync(entity);
     }
 
-    public async Task<int> DeleteWorkBookAsync(WorkBook workBook)
+    public async Task<WorkBook> DeleteWorkBookAsync(WorkBook workBook)
     {
         return await DeleteAsync(workBook);
     }
 
-    public async Task<WorkBook> GetWorkBookByIdAsync(int workBookId)
+    public async Task<WorkBook> GetWorkBookByIdAsync(string workBookId)
     {
         return await GetByIdAsync<WorkBook>(workBookId);
     }

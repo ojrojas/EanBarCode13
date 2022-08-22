@@ -1,5 +1,6 @@
 ﻿namespace Core.Services;
 
+
 public class SheetItemService : ISheetItemService
 {
     private readonly ISheetItemRepository _sheetItemRepository;
@@ -9,12 +10,14 @@ public class SheetItemService : ISheetItemService
         _sheetItemRepository = sheetItemRepository;
     }
 
-    public async Task<int> CreateSheetItemAsync(SheetItem sheetItem)
+    public async Task<SheetItemCreateResponse> CreateSheetItemAsync(SheetItemCreateRequest request)
     {
-        return await _sheetItemRepository.CreateSheetItemAsync(sheetItem);
+        SheetItemCreateResponse response = new(request.CorrelationId);
+        response.SheetItemCreated = await _sheetItemRepository.CreateSheetItemAsync(request.SheetItem);
+        return response;
     }
 
-    public Task<int> DeleteSheetItemAsync(int sheetItemId)
+    public Task<int> DeleteSheetItemAsync(string sheetItemId)
     {
         throw new NotImplementedException();
     }
@@ -24,12 +27,12 @@ public class SheetItemService : ISheetItemService
         return await _sheetItemRepository.GetAllSheetItemsAsync();
     }
 
-    public Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(int sheedId)
+    public Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<SheetItem> GetSheetItemByIdAsync(int sheetItemId)
+    public Task<SheetItem> GetSheetItemByIdAsync(string sheetItemId)
     {
         throw new NotImplementedException();
     }

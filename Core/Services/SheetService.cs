@@ -12,14 +12,14 @@
         public async Task<SheetCreateResponse> CreateSheetAsync(SheetCreateRequest request)
         {
             SheetCreateResponse response = new(request.CorrelationId);
-            response.SheetId = await _repository.CreateSheetAsync(request.Sheet);
+            response.SheetCreated = await _repository.CreateSheetAsync(request.Sheet);
             return response;
         }
 
         public async Task<SheetUpdateResponse> UpdateSheetAsync(SheetUpdateRequest request)
         {
             SheetUpdateResponse response = new(request.CorrelationId);
-            response.SheetId = await _repository.UpdateSheetAsync(request.Sheet);
+            response.SheetUpdated = await _repository.UpdateSheetAsync(request.Sheet);
             return response;
         }
 
