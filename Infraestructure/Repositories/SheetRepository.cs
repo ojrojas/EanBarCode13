@@ -1,7 +1,5 @@
 ﻿namespace Infraestructure.Repositories;
 
-
-
 public class SheetRepository : GenericRepository, ISheetRepository
 {
     private readonly ILogger<SheetRepository> _logger;
@@ -18,7 +16,7 @@ public class SheetRepository : GenericRepository, ISheetRepository
 
     public async Task<Sheet> UpdateSheetAsync(Sheet entity)
     {
-        _logger.LogInformation($"Create entity type of {typeof(Sheet)} value");
+        _logger.LogInformation($"Update entity type of {typeof(Sheet)} value");
         return await UpdateAsync(entity);
     }
 
@@ -34,5 +32,11 @@ public class SheetRepository : GenericRepository, ISheetRepository
         _logger.LogInformation($"Get all sheets by workbook id {sheetId}");
         var result = await GetAllAsync<Sheet>();
         return result.Where(x => x.Id == sheetId).FirstOrDefault();
+    }
+
+    public async Task<Sheet> DeleteSheetAsync(Sheet entity)
+    {
+        _logger.LogInformation($"Delete entity type of {typeof(Sheet)} value");
+        return await DeleteAsync(entity);
     }
 }

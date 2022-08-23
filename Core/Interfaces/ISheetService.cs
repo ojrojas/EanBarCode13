@@ -5,5 +5,6 @@
         Task<SheetCreateResponse> CreateSheetAsync(SheetCreateRequest request);
         Task<SheetGetByIdResponse> GetSheetByIdAsync(SheetGetByIdRequest request);
         Task<SheetUpdateResponse> UpdateSheetAsync(SheetUpdateRequest request);
+        Task<SheetDeleteResponse> DeleteSheetAsync(SheetDeleteRequest request);
     }
 }

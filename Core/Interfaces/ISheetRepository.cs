@@ -5,4 +5,5 @@ public interface ISheetRepository
     Task<Sheet> GetAllSheetByIdAsync(string sheetId);
     Task<IEnumerable<Sheet>> GetAllSheetByWorkBookIdAsync(string workBookId);
     Task<Sheet> UpdateSheetAsync(Sheet entity);
+    Task<Sheet> DeleteSheetAsync(Sheet entity);
 }

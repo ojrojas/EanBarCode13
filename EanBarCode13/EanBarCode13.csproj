@@ -16,7 +16,7 @@
         <ApplicationTitle>EanBarCode13</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.eanbarcode13</ApplicationId>
+        <ApplicationId>com.ojrojas.eanbarcode13</ApplicationId>
         <ApplicationIdGuid>B67DB562-E038-4A73-8EBE-766AD437D5B8</ApplicationIdGuid>
 
         <!-- Versions -->

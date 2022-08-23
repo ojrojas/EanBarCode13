@@ -4,11 +4,13 @@ public class WorkBookService : IWorkBookService
 {
     private readonly IWorkBookRepository _workBookRepository;
     private readonly ISheetRepository _sheetRepository;
+    private readonly ISheetItemRepository _sheetItemRepostiory;
 
-    public WorkBookService(IWorkBookRepository workBookRepository, ISheetRepository sheetRepository)
+    public WorkBookService(IWorkBookRepository workBookRepository, ISheetRepository sheetRepository, ISheetItemRepository sheetItemRepostiory)
     {
         _workBookRepository = workBookRepository ?? throw new ArgumentNullException(nameof(workBookRepository));
         _sheetRepository = sheetRepository ?? throw new ArgumentNullException(nameof(sheetRepository));
+        _sheetItemRepostiory = sheetItemRepostiory ?? throw new ArgumentNullException(nameof(sheetItemRepostiory));
     }
 
     public async Task<WorkBookCreateResponse> CreateWorkBookAsync(WorkBookCreateRequest request)
@@ -40,6 +42,13 @@ public class WorkBookService : IWorkBookService
         WorkBookDeleteResponse response = new(request.CorrelationId);
         var found = await _workBookRepository.GetWorkBookByIdAsync(request.Id);
         response.WorkBookDeleted = await _workBookRepository.DeleteWorkBookAsync(found);
+        var sheets = await GetListSheetByWorkBookId(response.WorkBookDeleted.Id);
+        foreach(var sheet in sheets)
+        {
+            await _sheetRepository.DeleteSheetAsync(sheet);
+            await _sheetItemRepostiory.DeleteSheetItemsBySheetIdAsync(sheet.Id);
+        }
+        
         return response;
     }
 

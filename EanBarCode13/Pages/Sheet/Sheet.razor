@@ -37,9 +37,9 @@
     protected override async Task OnInitializedAsync()
     {
         loading = true;
-        var items = await _sheetItemService.GetAllSheetItemsBySheetIdAsync(sheetId);
+        var items = await _sheetItemService.GetAllSheetItemsBySheetIdAsync(new() { SheetId = sheetId });
         loading = false;
-        SheetItems = items.ToList();
+        SheetItems = items.SheetItems.ToList();
     }
 
     private async Task HandlerButtons(int index)
@@ -48,7 +48,7 @@
         IndexSheetItem = index;
         var sheetItem = SheetItems[index];
         sheetItem.IsLooked = true;
-        await _sheetItemService.UpdateSheetItemAsync(sheetItem);
+        await _sheetItemService.UpdateSheetItemAsync(new() { SheetItemUpdate =  sheetItem });
         var sheet = await _sheetService.GetSheetByIdAsync(new() {SheetId = sheetId});
         sheet.Sheet.Position = index;
         await _sheetService.UpdateSheetAsync(new() { Sheet = sheet.Sheet });

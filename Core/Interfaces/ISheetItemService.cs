@@ -3,9 +3,9 @@
 public interface ISheetItemService
 {
     Task<SheetItemCreateResponse> CreateSheetItemAsync(SheetItemCreateRequest request);
-    Task<int> DeleteSheetItemAsync(string sheetItemId);
-    Task<IEnumerable<SheetItem>> GetAllSheetItemsAsync();
-    Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId);
-    Task<SheetItem> GetSheetItemByIdAsync(string sheetItemId);
-    Task<SheetItem> UpdateSheetItemAsync(SheetItem sheetItem);
+    Task<SheetItemDeleteResponse> DeleteSheetItemAsync(SheetItemDeleteRequest request);
+    Task<SheetItemAllResponse> GetAllSheetItemsAsync(SheetItemAllRequest request);
+    Task<SheetItemsGetBySheetIdResponse> GetAllSheetItemsBySheetIdAsync(SheetItemsGetBySheetIdRequest request);
+    Task<SheetItemsGetBySheetIdResponse> GetSheetItemByIdAsync(SheetItemsGetBySheetIdRequest request);
+    Task<SheetItemUpdateResponse> UpdateSheetItemAsync(SheetItemUpdateRequest request);
 }

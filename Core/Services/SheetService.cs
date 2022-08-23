@@ -23,6 +23,13 @@
             return response;
         }
 
+        public async Task<SheetDeleteResponse> DeleteSheetAsync(SheetDeleteRequest request)
+        {
+            SheetDeleteResponse response = new(request.CorrelationId);
+            response.SheetDeleted = await _repository.DeleteSheetAsync(request.SheetDelete);
+            return response;
+        }
+
         public async Task<SheetGetByIdResponse> GetSheetByIdAsync(SheetGetByIdRequest request)
         {
             SheetGetByIdResponse response = new(request.CorrelationId);

@@ -1,6 +1,5 @@
 ﻿namespace Core.Services;
 
-
 public class SheetItemService : ISheetItemService
 {
     private readonly ISheetItemRepository _sheetItemRepository;
@@ -17,28 +16,45 @@ public class SheetItemService : ISheetItemService
         return response;
     }
 
-    public Task<int> DeleteSheetItemAsync(string sheetItemId)
+    public async Task<SheetItemDeleteResponse> DeleteSheetItemAsync(SheetItemDeleteRequest request)
     {
+        SheetItemDeleteResponse response = new(request.CorrelationId);
+        response.SheetItemDeleted = await _sheetItemRepository.DeleteSheetItemAsyncAsync(request.SheetItemDelete);
+        return response;
+    }
+
+    public async Task<SheetItemAllResponse> GetAllSheetItemsAsync(SheetItemAllRequest request)
+    {
+        SheetItemAllResponse response = new(request.CorrelationId);
+        response.SheetItems = await _sheetItemRepository.GetAllSheetItemsAsync();
+        return response;
+    }
+
+    public async Task<SheetItemsGetBySheetIdResponse> GetAllSheetItemsBySheetIdAsync(SheetItemsGetBySheetIdRequest request)
+    {
+        SheetItemsGetBySheetIdResponse response = new(request.CorrelationId);
+        response.SheetItems = await _sheetItemRepository.GetSheetItemsBySheetIdAsync(request.SheetId);
+        return response;
+    }
+
+    public async Task<SheetItemsGetBySheetIdResponse> GetSheetItemByIdAsync(SheetItemsGetBySheetIdRequest request)
+    {
+        SheetItemsGetBySheetIdResponse response = new(request.CorrelationId);
+        response.SheetItems = await _sheetItemRepository.GetSheetItemsBySheetIdAsync(request.SheetId);
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<SheetItem>> GetAllSheetItemsAsync()
+    public async Task<SheetItemUpdateResponse> UpdateSheetItemAsync(SheetItemUpdateRequest request)
     {
-        return await _sheetItemRepository.GetAllSheetItemsAsync();
+        SheetItemUpdateResponse response = new(request.CorrelationId);
+        response.SheetItemUpdated = await _sheetItemRepository.UpdateSheetItemAsync(request.SheetItemUpdate);
+        return response;
     }
 
-    public async Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId)
+    public async Task<SheetItemsDeleteBySheetIdResponse> DeleteSheetItemsBySheetIdAsync(SheetItemsDeleteBySheetIdRequest request)
     {
-        return await _sheetItemRepository.GetSheetItemsBySheetIdAsync(sheedId);
-    }
-
-    public Task<SheetItem> GetSheetItemByIdAsync(string sheetItemId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<SheetItem> UpdateSheetItemAsync(SheetItem sheetItem)
-    {
-        return await _sheetItemRepository.UpdateSheetItemAsync(sheetItem);
+        SheetItemsDeleteBySheetIdResponse response = new(request.CorrelationId);
+        response.SheetItems = await _sheetItemRepository.DeleteSheetItemsBySheetIdAsync(request.SheetId);
+        return response;
     }
 }
