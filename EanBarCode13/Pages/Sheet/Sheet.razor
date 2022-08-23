@@ -33,11 +33,15 @@
     private int IndexSheetItem = default;
     private bool loading = false;
     private List<SheetItem> SheetItems { get; set; }
+    private Core.Models.Sheet SheetFound = default;
 
     protected override async Task OnInitializedAsync()
     {
         loading = true;
         var items = await _sheetItemService.GetAllSheetItemsBySheetIdAsync(new() { SheetId = sheetId });
+        var sheetResponse = await _sheetService.GetSheetByIdAsync(new() { SheetId = sheetId });
+        SheetFound = sheetResponse.Sheet;
+        IndexSheetItem = sheetResponse.Sheet.Position;
         loading = false;
         SheetItems = items.SheetItems.ToList();
     }
@@ -49,8 +53,7 @@
         var sheetItem = SheetItems[index];
         sheetItem.IsLooked = true;
         await _sheetItemService.UpdateSheetItemAsync(new() { SheetItemUpdate =  sheetItem });
-        var sheet = await _sheetService.GetSheetByIdAsync(new() {SheetId = sheetId});
-        sheet.Sheet.Position = index;
-        await _sheetService.UpdateSheetAsync(new() { Sheet = sheet.Sheet });
+        SheetFound.Position = index;
+        await _sheetService.UpdateSheetAsync(new() { Sheet = SheetFound });
     }
 }
