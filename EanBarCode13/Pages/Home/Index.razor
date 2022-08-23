@@ -9,6 +9,7 @@
 @using EanBarCode13.Services
 @inject IDialogCustomService _dialogService;
 @inject IExcelService _excelService;
+@using EanBarCode13.Pages.Home.HomeComponents;
 
 <div class="containermainindex">
 
@@ -45,26 +46,16 @@
                     </h2>
                     <div id="@reference" class="accordion-collapse collapse" aria-labelledby="@referenceHeading" data-bs-parent="#accordionEanBarCode">
                         <div class="accordion-body">
-                            <ul class="list-group">
-                                @foreach (var sheet in i.Sheets)
-                                {
-                                    <li class="list-group-item">
-                                        <div class="nav-item px-3">
-                                            <NavLink class="nav-link" href="sheet">
-                                                <span>@sheet.Name</span> - <span class="item-sheetitems-item"><strong>@sheet.Position</strong>/@sheet.Quantity</span>
-                                            </NavLink>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
+                            @foreach (var sheet in i.Sheets)
+                            {
+                                <ListSheets Sheet="@sheet"/>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         }
     }
-
-
     <div class="actionsbuttons">
         <button type="button" @onclick="OpenFileWorkBook" class="btn btn-primary">
             Add WorkBook
@@ -99,7 +90,8 @@
     private async Task OpenFileWorkBook()
     {
         loading = true;
-        await _excelService.CreateWorkBookAsync();
+        var isChargedFile = await _excelService.CreateWorkBookAsync();
+        loading = isChargedFile;
         await LoadDataWorkBooksAsync();
     }
 }

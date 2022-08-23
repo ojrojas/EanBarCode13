@@ -1,0 +1,13 @@
+﻿<div style="text-align:center">
+    <button type="button" @onclick="async () => await OnClickCall.InvokeAsync(Index -= 1)" class="btn btn-primary btn-sm" disabled="@Index.Equals(0)">Back</button>
+    <button type="button" @onclick="async () => await OnClickCall.InvokeAsync(Index += 1)" class="btn btn-secondary btn-sm" disabled="@Index.Equals(LastIndex-1)">Next</button>
+</div>
+
+@code {
+    [Parameter]
+    public  int Index { get; set; }
+    [Parameter]
+    public int LastIndex { get; set; }
+    [Parameter]
+    public EventCallback<int> OnClickCall { get; set; }
+}

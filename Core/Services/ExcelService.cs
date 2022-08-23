@@ -18,17 +18,18 @@ namespace Core.Services
             _sheetItemService = sheetItemService ?? throw new ArgumentNullException(nameof(sheetItemService));
         }
 
-        public async Task CreateWorkBookAsync()
+        public async Task<bool> CreateWorkBookAsync()
         {
             var filecharged = await OpenFileWorkBook();
 
+            if (filecharged is null) return false;
+
             using var document = SpreadsheetDocument.Open(filecharged.FullPath, true);
-            if (document is null) return;
             WorkbookPart workbookPart = document.WorkbookPart;
             SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
             SharedStringTable sst = sstpart.SharedStringTable;
 
-            var workbook = await _workbookService.CreateWorkBookAsync(new WorkBookCreateRequest()
+            var workbook = await _workbookService.CreateWorkBookAsync(new()
             {
                 WorkBook = new()
                 {
@@ -42,20 +43,20 @@ namespace Core.Services
             {
                 Worksheet sheet = worksheetPart.Worksheet;
                 var nameSheet = workbookPart.Workbook.Descendants<DocumentFormat.OpenXml.Spreadsheet.Sheet>().ElementAt(index).Name;
+                var rows = sheet.Descendants<Row>();
 
-                var sheetId = _sheetService.CreateSheetAsync(
+                var sheetId = await _sheetService.CreateSheetAsync(
                     new()
                     {
                         Sheet = new()
                         {
                             Name = nameSheet,
                             Position = 0,
-                            Quantity = workbookPart.WorksheetParts.Count(),
+                            Quantity = rows.Count() -1,
                             WorkBookId = workbook.WorkBookCreated.Id
                         }
                     });
 
-                var rows = sheet.Descendants<Row>();
 
                 Console.WriteLine("Row count = {0}", rows.LongCount());
 
@@ -70,11 +71,12 @@ namespace Core.Services
                     var value = cell1.CellValue;
                     var stringValue = double.Parse(value.InnerText).ToString("F0", CultureInfo.InvariantCulture).Substring(0, 13).PadLeft(13, '0');
                     Console.WriteLine("Shared string {0}: {1}", str, stringValue);
-                    await _sheetItemService.CreateSheetItemAsync(new() { SheetItem = new SheetItem() { Code = stringValue, Name = str, SheetId = sheetId.Id } });
+                    await _sheetItemService.CreateSheetItemAsync(new() { SheetItem = new() { Code = stringValue, Name = str, SheetId = sheetId.SheetCreated.Id, IsLooked = false } });
                 }
 
                 index++;
             }
+            return true;
         }
 
         private async Task<FileResult> OpenFileWorkBook()
@@ -94,7 +96,7 @@ namespace Core.Services
 
         private async Task<PickOptions> OptionsActions()
         {
-            var customFileType = new FilePickerFileType(
+            FilePickerFileType customFileType = new(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
                     { DevicePlatform.iOS, new[] { "public.my.eanbarcode.extension" } }, // or general UTType values

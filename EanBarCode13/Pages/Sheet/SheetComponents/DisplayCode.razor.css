@@ -1,0 +1,14 @@
+﻿
+@font-face {
+    font-family: 'librebarcodeean13-regular';
+    src: url('\fonts\librebarcodeean13-regular.ttf') format('truetype');
+}
+
+.number-code {
+    font-family:librebarcodeean13-regular;
+    font-size:200px;
+}
+
+.card-display {
+    height:450px;
+}

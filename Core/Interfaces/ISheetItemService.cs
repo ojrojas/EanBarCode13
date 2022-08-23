@@ -7,4 +7,5 @@ public interface ISheetItemService
     Task<IEnumerable<SheetItem>> GetAllSheetItemsAsync();
     Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId);
     Task<SheetItem> GetSheetItemByIdAsync(string sheetItemId);
+    Task<SheetItem> UpdateSheetItemAsync(SheetItem sheetItem);
 }

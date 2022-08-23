@@ -5,5 +5,6 @@ public class SheetItem : BaseEntity
 { 
     public string Name { get; set; }
     public string Code { get; set; }
-    public int SheetId { get; set; }
+    public bool IsLooked { get; set; }
+    public string SheetId { get; set; }
 }

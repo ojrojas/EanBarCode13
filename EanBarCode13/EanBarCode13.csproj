@@ -59,5 +59,4 @@
       <ProjectReference Include="..\Core\Core.csproj" />
       <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
     </ItemGroup>
-
 </Project>

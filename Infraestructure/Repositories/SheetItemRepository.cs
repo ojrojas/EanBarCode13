@@ -13,8 +13,21 @@ public class SheetItemRepository : GenericRepository, ISheetItemRepository
         return await CreateAsync(sheetItem);
     }
 
+    public async Task<SheetItem> UpdateSheetItemAsync(SheetItem sheetItem)
+    {
+        return await UpdateAsync(sheetItem);
+    }
+
     public async Task<IEnumerable<SheetItem>> GetAllSheetItemsAsync()
     {
         return await GetAllAsync<SheetItem>();
     }
+
+    public async Task<IEnumerable<SheetItem>> GetSheetItemsBySheetIdAsync(string sheetId)
+    {
+        var sheetItems =  await GetAllAsync<SheetItem>();
+        return sheetItems.Where(x => x.SheetId.Equals(sheetId));
+    }
+
+
 }

@@ -2,6 +2,6 @@
 {
     public interface IExcelService
     {
-        Task CreateWorkBookAsync();
+        Task<bool> CreateWorkBookAsync();
     }
 }

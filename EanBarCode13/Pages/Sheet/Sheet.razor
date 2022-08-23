@@ -1,8 +1,56 @@
 ﻿@page "/sheet/{sheetId}"
 
+@using System.Linq;
+@using Core.Models;
+@using EanBarCode13.Pages.Sheet.SheetComponents;
+@using Core.Interfaces;
+@inject ISheetItemService _sheetItemService;
+@inject ISheetService _sheetService;
 
-<h3>Sheet Hello World</h3>
+
+@if (loading)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+
+
+@if (SheetItems is not null)
+{
+    <h3>Sheet: @SheetItems[IndexSheetItem].Code</h3>
+    <DisplayCode SheetItem="SheetItems[IndexSheetItem]" />
+    <hr />
+    <ButtonsActions OnClickCall="HandlerButtons" Index="IndexSheetItem" LastIndex="SheetItems.Count()" />
+}
 
 @code {
+    [Parameter]
+    public string sheetId { get; set; }
 
+    private int IndexSheetItem = default;
+    private bool loading = false;
+    private List<SheetItem> SheetItems { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        loading = true;
+        var items = await _sheetItemService.GetAllSheetItemsBySheetIdAsync(sheetId);
+        loading = false;
+        SheetItems = items.ToList();
+    }
+
+    private async Task HandlerButtons(int index)
+    {
+        await Task.Yield();
+        IndexSheetItem = index;
+        var sheetItem = SheetItems[index];
+        sheetItem.IsLooked = true;
+        await _sheetItemService.UpdateSheetItemAsync(sheetItem);
+        var sheet = await _sheetService.GetSheetByIdAsync(new() {SheetId = sheetId});
+        sheet.Sheet.Position = index;
+        await _sheetService.UpdateSheetAsync(new() { Sheet = sheet.Sheet });
+    }
 }

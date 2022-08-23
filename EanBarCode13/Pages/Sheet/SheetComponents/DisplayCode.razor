@@ -1,0 +1,24 @@
+﻿@using Core.Models
+@using Core.Interfaces
+@inject ISheetItemService _sheetService
+
+<div class="card border-dark card-display">
+    <div class="card-header">Number: @SheetItem.Code</div>
+    <div class="card-body text-dark">
+        <h1 class="card-title number-code">@SheetItem.Code</h1>
+        <hr/>
+        <p class="card-text">@SheetItem.Name</p>
+        @if(@SheetItem.IsLooked)
+        {
+            <p style="text-align:center">This item all ready is looked</p>
+        }else 
+        {
+            <p style="text-align:center">Looked!</p>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public SheetItem SheetItem { get; set; }
+}

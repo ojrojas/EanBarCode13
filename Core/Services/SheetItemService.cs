@@ -27,13 +27,18 @@ public class SheetItemService : ISheetItemService
         return await _sheetItemRepository.GetAllSheetItemsAsync();
     }
 
-    public Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId)
+    public async Task<IEnumerable<SheetItem>> GetAllSheetItemsBySheetIdAsync(string sheedId)
     {
-        throw new NotImplementedException();
+        return await _sheetItemRepository.GetSheetItemsBySheetIdAsync(sheedId);
     }
 
     public Task<SheetItem> GetSheetItemByIdAsync(string sheetItemId)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<SheetItem> UpdateSheetItemAsync(SheetItem sheetItem)
+    {
+        return await _sheetItemRepository.UpdateSheetItemAsync(sheetItem);
     }
 }

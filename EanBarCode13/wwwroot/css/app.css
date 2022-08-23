@@ -1,5 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
+@font-face {
+    font-family: 'librebarcodeean13-regular';
+    src: url(../fonts/LibreBarcodeEAN13-Regular.ttf) format('truetype');
+}
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
